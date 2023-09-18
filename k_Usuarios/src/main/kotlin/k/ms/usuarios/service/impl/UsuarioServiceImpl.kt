@@ -26,7 +26,6 @@ class UsuarioServiceImpl : UsuarioService {
     }
 
     override fun findByNombre(name: String): UsuarioDTO {
-<<<<<<< HEAD
         return convert.convertUsuarioDTO(repo.findByNombre(name))
     }
 
@@ -49,31 +48,4 @@ class UsuarioServiceImpl : UsuarioService {
         return repo.existsByNombre(name)
     }
 
-
-=======
-        return convert.convertUsuarioDTO(repo.findByNombre(name));
-    }
-
-    //FIXME Ver si se usa
-    override fun exitsByName(name: String): Boolean =
-        repo.existsByNombre(name);
-
-    override fun saveUser(user: UsuarioDTO): UsuarioDTO =
-        convert.convertUsuarioDTO(repo.save(convert.convertUsuarioEntity(user)));
-
-    override fun deleteByName(name: String): RespuestaDTO {
-        val responseDto = RespuestaDTO();
-        val userExists = repo.existsByNombre(name)
-        if (userExists) {
-            repo.deleteByName(name)
-        } else {
-            responseDto.message = "No existe el usuario con el nombre proporcionado";
-            responseDto.errorsExits = true;
-        }
-        return responseDto;
-    }
-
-
-
->>>>>>> 72efa57edec8d92680719ecd13cd17824bfa6d26
 }

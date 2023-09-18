@@ -26,14 +26,9 @@ interface UsuarioRepository : MongoRepository<UsuarioEntity, String> {
     /**
      * Removes the user matching the name
      *
-     * @param nombre name user
+     * @param name name user
      */
-<<<<<<< HEAD
     fun deleteByNombre(name: String)
-=======
-    fun deleteByName(name: String)
->>>>>>> 72efa57edec8d92680719ecd13cd17824bfa6d26
-
 
 }
 

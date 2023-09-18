@@ -5,24 +5,43 @@ import k.ms.usuarios.dto.UsuarioDTO
 
 interface UsuarioService {
 
+    /**
+     * Returns the list of users
+     *
+     * @return list of users
+     */
     fun findAll(): List<UsuarioDTO>
 
+    /**
+     * Returns the user matching the searched name
+     *
+     * @param name name user
+     * @return user dto
+     */
     fun findByNombre(name: String): UsuarioDTO
 
-<<<<<<< HEAD
+    /**
+     * Saves and returns the user
+     *
+     * @param user user dto
+     * @return user dto
+     */
     fun saveUser(user: UsuarioDTO): UsuarioDTO
 
+    /**
+     * Removes the user
+     *
+     * @param name user
+     * @return
+     */
     fun deleteByName(name: String): RespuestaDTO
 
+    /**
+     * Returns true or false if user is found
+     *
+     * @param name name user
+     * @return true or false
+     */
     fun exitsUser(name: String): Boolean
-=======
-   //FIXME Ver si se usa este método
-    fun exitsByName(name: String): Boolean
-
-    fun saveUser(user: UsuarioDTO): UsuarioDTO
-
-    fun deleteByName(name: String): RespuestaDTO;
->>>>>>> 72efa57edec8d92680719ecd13cd17824bfa6d26
-
 
 }

@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "usuarios")
 data class UsuarioEntity(
 
-    /** Identificador del usuario */
+    /** User ID */
     @Id
     val id: String? = null,
 
-    /** Nombre único del usuario */
+    /** Unique user name */
     @Indexed(unique = true)
     val nombre: String,
 
-    /** Email único del usuario */
+    /** Unique user email */
     @Indexed(unique = true)
     val email: String,
 
-    /** Password del usuario */
+    /** Unique user password */
     val pass: String
 )

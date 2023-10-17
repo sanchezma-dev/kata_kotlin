@@ -6,20 +6,20 @@ import org.springframework.data.mongodb.core.index.Indexed
 
 data class UsuarioDTO(
 
-    /** Identificador del usuario */
+    /** User ID */
     val id: String? = null,
 
-    /** Nombre único del usuario */
+    /** Unique user name */
     @field:NotEmpty(message = "El nombre del usuario debe estar informado")
     val nombre: String,
 
-    /** Email único del usuario */
+    /** Unique user email */
     @field:NotEmpty(message = "El campo email no puede estar vacío")
     @field:Email(message = "El formato del email no es el correcto")
     @field:Indexed(unique = true)
     var email: String,
 
-    /** Password del usuario */
+    /** Unique user password */
     @field:NotEmpty(message = "La contraseña no puede estar vacía")
     var pass: String
 )

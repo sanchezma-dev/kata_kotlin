@@ -5,6 +5,8 @@ import k.ms.usuarios.dto.RespuestaDTO
 import k.ms.usuarios.dto.UsuarioDTO
 
 import k.ms.usuarios.service.UsuarioService
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,8 +21,13 @@ class UsuarioController {
     @Autowired
     private lateinit var serv: UsuarioService
 
+    /** Log */
+    val LOG: Logger = LogManager.getLogger(UsuarioController::class.java)
+
+
     @GetMapping("/listUsers")
     fun list(): ResponseEntity<RespuestaDTO> {
+        LOG.info("Entrando en el servicio de listar usuarios")
         val userList: List<UsuarioDTO> = serv.findAll()
         val responseController = RespuestaDTO()
         if (userList.isNullOrEmpty()) {
@@ -29,6 +36,7 @@ class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseController)
         }
         responseController.users = userList
+        LOG.info("Saliendo... del servicio de listar usuarios")
         return ResponseEntity.ok().body(responseController)
     }
 

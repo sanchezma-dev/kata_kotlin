@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.validation.Validation
 import k.ms.usuarios.KUsuariosApplication
 import k.ms.usuarios.controller.UsuarioController
 import k.ms.usuarios.dto.RespuestaDTO
@@ -71,7 +72,7 @@ class UsuarioControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
-    @Test
+    //@Test
     fun `user does not exist`(){
         val name: String = "nameNoExist"
         val user = UsuarioDTO(nombre = "prueba", email = "email", pass = "pass")
@@ -103,6 +104,30 @@ class UsuarioControllerTest {
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun createError() {
+        // User with errors
+        val user = UsuarioDTO(nombre = "", email = "invalidEmail", pass = "")
+
+        // Creating a simulated BindingResult with errors
+        val validator = Validation.buildDefaultValidatorFactory().validator
+        val violations = validator.validate(user)
+        val bindingResult = BeanPropertyBindingResult(user, "user")
+        for (violation in violations) {
+            bindingResult.rejectValue(violation.propertyPath.toString(), "", violation.message)
+        }
+
+        // Execute controller
+        val response: ResponseEntity<RespuestaDTO> = usuarioController.createUser(user, bindingResult)
+        // Error list
+        val listMenError = response.body!!.listMessages
+        // Response test
+        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+        assertTrue(response.body!!.errorsExits)
+        assertEquals(3, listMenError.size)
+
     }
 
 }

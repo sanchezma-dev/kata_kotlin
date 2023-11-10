@@ -73,7 +73,7 @@ class UsuarioController {
 
 
     @PostMapping("/createUser")
-    fun createUser(@Valid @RequestBody user: UsuarioDTO, bindingResult: BindingResult): ResponseEntity<*> {
+    fun createUser(@Valid @RequestBody user: UsuarioDTO, bindingResult: BindingResult): ResponseEntity<RespuestaDTO> {
         val responseController = RespuestaDTO()
         if (bindingResult.hasErrors()) {
             responseController.errorsExits = true

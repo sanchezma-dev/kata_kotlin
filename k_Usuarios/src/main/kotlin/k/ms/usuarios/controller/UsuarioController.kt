@@ -15,19 +15,16 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("k_usuarios")
-class UsuarioController {
-
-    /** Service usuario */
-    @Autowired
-    private lateinit var serv: UsuarioService
+//FIXME Al añadir usuarioService así, es la mejor forma en kotlin. Lo mete en el constructor
+class UsuarioController(private val serv: UsuarioService) {
 
     /** Log */
-    val LOG: Logger = LogManager.getLogger(UsuarioController::class.java)
+    val Log: Logger = LogManager.getLogger(UsuarioController::class.java)
 
 
     @GetMapping("/listUsers")
     fun list(): ResponseEntity<RespuestaDTO> {
-        LOG.info("Entrando en el servicio de listar usuarios")
+        Log.info("Entrando en el servicio de listar usuarios")
         val userList: List<UsuarioDTO> = serv.findAll()
         val responseController = RespuestaDTO()
         if (userList.isNullOrEmpty()) {
@@ -36,7 +33,7 @@ class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseController)
         }
         responseController.users = userList
-        LOG.info("Saliendo... del servicio de listar usuarios")
+        Log.info("Saliendo... del servicio de listar usuarios")
         return ResponseEntity.ok().body(responseController)
     }
 
@@ -46,6 +43,8 @@ class UsuarioController {
         bindingResult: BindingResult
     ): ResponseEntity<RespuestaDTO> {
         val responseController = RespuestaDTO()
+
+        // Checks if the user exists
         if (!serv.exitsUser(name)) {
             return ResponseEntity.badRequest().body(
                 RespuestaDTO(
@@ -54,6 +53,8 @@ class UsuarioController {
                 )
             )
         }
+
+        // Validation bindingResult
         if (bindingResult.hasErrors()) {
             responseController.errorsExits = true
             val errorsList = ArrayList<String>()
@@ -64,6 +65,8 @@ class UsuarioController {
             responseController.listMessages = errorsList
             return ResponseEntity.badRequest().body(responseController)
         }
+
+        //
         val userUpdate: UsuarioDTO = serv.findByNombre(name)
         userUpdate.email = userDto.email
         userUpdate.pass = userDto.pass

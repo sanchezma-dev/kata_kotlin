@@ -44,15 +44,16 @@ class UsuarioControllerTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        usuarioController = UsuarioController()
-        ReflectionTestUtils.setField(usuarioController, "serv", usuarioService)
+        //FIXME Al inicializar usuarioController, inicializa a su vez usuarioService.
+        // Este debe estar en el constructor del controller
+        usuarioController = UsuarioController(usuarioService)
     }
 
-    //@Test
+    @Test
     fun testList_NoUserFound() {
         val listEmpty = listOf<UsuarioDTO>() //list empty
         // Mock of list empty with usuarioService
-        Mockito.`when`(usuarioService.findAll()).thenReturn(listEmpty)
+        `when`(usuarioService.findAll()).thenReturn(listEmpty)
         //  Call to the list of controller methods
         val response: ResponseEntity<RespuestaDTO> = usuarioController.list()
         // Checking test responses
@@ -61,7 +62,7 @@ class UsuarioControllerTest {
         assertEquals("No hay ningún usuario registrado", messageString)
     }
 
-   // @Test
+    @Test
     fun testList_IsNull() {
         val listNull = null // list is null
         //Mock
@@ -72,7 +73,7 @@ class UsuarioControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
-    //@Test
+    @Test
     fun `user does not exist`(){
         val name: String = "nameNoExist"
         val user = UsuarioDTO(nombre = "prueba", email = "email", pass = "pass")
@@ -90,8 +91,8 @@ class UsuarioControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
     }
 
-    // Test para simular petición http
-    //@Test
+    // FIXME Test to simulate an http request
+    @Test
     fun testUpdate_NonExistentUser() {
         val nonExistentName = "NombreInexistente"
 

@@ -8,6 +8,8 @@ Para la capa de persistencia he utilizado la interface de MongoRepository para f
 Ensayo con entity, dto, convert para la conversión entre objetos. 
 Además de la librerías Validation (jakarta.validation), log4j entre otras.
 
+Además, he realizado algunas pruebas con JUnit y Mockito para realizar test.
+
 Kotlin es un lenguaje fácil de utilizar, facilita mucho la legibilidad del código y si tienes experiencia con Java tiene una curva de aprendizaje simple.
 Al implementarlo con Spring boot, ha sido sencillo la puesta en marcha del servicio.
 
